@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+package photo.img;
+
+option java_outer_classname = "ImageDefs";
+
+enum ImageFormat {
+  IF_JPEG = 0;
+  IF_PNG = 1;
+  IF_GIF = 2;
+  IF_UNKNOWN = 3;
+  IF_ICO = 4;
+  IF_BMP = 5;
+  IF_WEBP = 6;
+  IF_SVG = 7;
+}

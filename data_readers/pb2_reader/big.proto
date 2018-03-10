@@ -1,0 +1,31 @@
+import "image_defs.proto";
+
+package photo.bki;
+
+option java_outer_classname = "ImageBki";
+
+enum SocNet {
+  OK = 0;
+  VK = 1;
+  MM = 2;
+}
+
+message ImageId {
+  required uint64 imageHash = 1;
+}
+
+message ImageStruct {
+  required string fullUrl = 1;
+  required uint32 width = 2;
+  required uint32 height = 3;
+  required photo.img.ImageFormat format = 4;
+  required ImageId imageId = 5;
+  required bytes content = 6;
+}
+
+message ImageRef {
+  required string userId = 1;
+  required SocNet socNet = 2;
+  optional ImageId avatarId = 3;
+  repeated ImageId imageIds = 4;
+}
