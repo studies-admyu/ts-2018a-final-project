@@ -4,7 +4,7 @@
 import os
 import sys
 
-from data_readers.pb2_reader.pb2_document_reader import Pb2DocumentReader
+from data_processing.pb2.reader.pb2_document_reader import Pb2DocumentReader
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:

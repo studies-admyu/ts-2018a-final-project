@@ -14,7 +14,7 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
-import data_readers.pb2_reader.image_defs_pb2 as image__defs__pb2
+import data_processing.pb2.reader.image_defs_pb2 as image__defs__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
