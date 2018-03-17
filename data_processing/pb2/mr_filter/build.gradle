@@ -1,0 +1,33 @@
+group = 'org.sphere.diploma'
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    maven {
+        name = 'cloudera'
+        url = 'https://repository.cloudera.com/artifactory/cloudera-repos'
+    }
+    mavenCentral()
+}
+
+configurations {
+    included
+    compile.extendsFrom included
+}
+
+dependencies {
+    included 'org.jsoup:jsoup:1.10.3'
+    compile 'org.apache.hadoop:hadoop-common:2.6.0-cdh5.12.1'
+    compile 'org.apache.hadoop:hadoop-mapreduce-client-core:2.6.0-cdh5.12.1'
+    compile 'com.google.code.findbugs:jsr305:3.0.0'
+}
+
+jar {
+    from {
+        (configurations.included).collect {
+            it.isDirectory() ? it: zipTree(it)
+        }
+    }
+}
