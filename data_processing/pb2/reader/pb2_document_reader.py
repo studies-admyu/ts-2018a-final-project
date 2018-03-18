@@ -4,8 +4,8 @@
 import os
 import gzip
 
-from data_readers.pb2_reader.gs_pb2 import document_length
-from data_readers.pb2_reader.big_pb2 import ImageStruct
+from data_processing.pb2.reader.gs_pb2 import document_length
+from data_processing.pb2.reader.big_pb2 import ImageStruct
 
 class Pb2DocumentReader:
     _DOCUMENT_LENGTH_SIZE = 5
