@@ -6,13 +6,7 @@ package photo.bki;
 public final class ImageBki {
   private ImageBki() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   /**
    * Protobuf enum {@code photo.bki.SocNet}
@@ -22,15 +16,15 @@ public final class ImageBki {
     /**
      * <code>OK = 0;</code>
      */
-    OK(0),
+    OK(0, 0),
     /**
      * <code>VK = 1;</code>
      */
-    VK(1),
+    VK(1, 1),
     /**
      * <code>MM = 2;</code>
      */
-    MM(2),
+    MM(2, 2),
     ;
 
     /**
@@ -47,19 +41,9 @@ public final class ImageBki {
     public static final int MM_VALUE = 2;
 
 
-    public final int getNumber() {
-      return value;
-    }
+    public final int getNumber() { return value; }
 
-    /**
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
     public static SocNet valueOf(int value) {
-      return forNumber(value);
-    }
-
-    public static SocNet forNumber(int value) {
       switch (value) {
         case 0: return OK;
         case 1: return VK;
@@ -72,17 +56,17 @@ public final class ImageBki {
         internalGetValueMap() {
       return internalValueMap;
     }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        SocNet> internalValueMap =
+    private static com.google.protobuf.Internal.EnumLiteMap<SocNet>
+        internalValueMap =
           new com.google.protobuf.Internal.EnumLiteMap<SocNet>() {
             public SocNet findValueByNumber(int number) {
-              return SocNet.forNumber(number);
+              return SocNet.valueOf(number);
             }
           };
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
+      return getDescriptor().getValues().get(index);
     }
     public final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptorForType() {
@@ -104,19 +88,21 @@ public final class ImageBki {
       return VALUES[desc.getIndex()];
     }
 
+    private final int index;
     private final int value;
 
-    private SocNet(int value) {
+    private SocNet(int index, int value) {
+      this.index = index;
       this.value = value;
     }
 
     // @@protoc_insertion_point(enum_scope:photo.bki.SocNet)
   }
 
-  public interface ImageIdOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:photo.bki.ImageId)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ImageIdOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required uint64 imageHash = 1;
     /**
      * <code>required uint64 imageHash = 1;</code>
      */
@@ -129,32 +115,36 @@ public final class ImageBki {
   /**
    * Protobuf type {@code photo.bki.ImageId}
    */
-  public  static final class ImageId extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:photo.bki.ImageId)
-      ImageIdOrBuilder {
-  private static final long serialVersionUID = 0L;
+  public static final class ImageId extends
+      com.google.protobuf.GeneratedMessage
+      implements ImageIdOrBuilder {
     // Use ImageId.newBuilder() to construct.
-    private ImageId(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private ImageId(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private ImageId() {
-      imageHash_ = 0L;
+    private ImageId(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final ImageId defaultInstance;
+    public static ImageId getDefaultInstance() {
+      return defaultInstance;
     }
 
+    public ImageId getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private ImageId(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -167,8 +157,8 @@ public final class ImageBki {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -184,7 +174,7 @@ public final class ImageBki {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -195,14 +185,30 @@ public final class ImageBki {
       return photo.bki.ImageBki.internal_static_photo_bki_ImageId_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return photo.bki.ImageBki.internal_static_photo_bki_ImageId_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               photo.bki.ImageBki.ImageId.class, photo.bki.ImageBki.ImageId.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<ImageId> PARSER =
+        new com.google.protobuf.AbstractParser<ImageId>() {
+      public ImageId parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ImageId(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ImageId> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required uint64 imageHash = 1;
     public static final int IMAGEHASH_FIELD_NUMBER = 1;
     private long imageHash_;
     /**
@@ -218,11 +224,13 @@ public final class ImageBki {
       return imageHash_;
     }
 
+    private void initFields() {
+      imageHash_ = 0L;
+    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasImageHash()) {
         memoizedIsInitialized = 0;
@@ -234,14 +242,16 @@ public final class ImageBki {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeUInt64(1, imageHash_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -249,59 +259,18 @@ public final class ImageBki {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(1, imageHash_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof photo.bki.ImageBki.ImageId)) {
-        return super.equals(obj);
-      }
-      photo.bki.ImageBki.ImageId other = (photo.bki.ImageBki.ImageId) obj;
-
-      boolean result = true;
-      result = result && (hasImageHash() == other.hasImageHash());
-      if (hasImageHash()) {
-        result = result && (getImageHash()
-            == other.getImageHash());
-      }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasImageHash()) {
-        hash = (37 * hash) + IMAGEHASH_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getImageHash());
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static photo.bki.ImageBki.ImageId parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static photo.bki.ImageBki.ImageId parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static photo.bki.ImageBki.ImageId parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -325,57 +294,46 @@ public final class ImageBki {
     }
     public static photo.bki.ImageBki.ImageId parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static photo.bki.ImageBki.ImageId parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static photo.bki.ImageBki.ImageId parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static photo.bki.ImageBki.ImageId parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static photo.bki.ImageBki.ImageId parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static photo.bki.ImageBki.ImageId parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(photo.bki.ImageBki.ImageId prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -383,15 +341,14 @@ public final class ImageBki {
      * Protobuf type {@code photo.bki.ImageId}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:photo.bki.ImageId)
-        photo.bki.ImageBki.ImageIdOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements photo.bki.ImageBki.ImageIdOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return photo.bki.ImageBki.internal_static_photo_bki_ImageId_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return photo.bki.ImageBki.internal_static_photo_bki_ImageId_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -404,20 +361,27 @@ public final class ImageBki {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         imageHash_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -450,32 +414,6 @@ public final class ImageBki {
         return result;
       }
 
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof photo.bki.ImageBki.ImageId) {
           return mergeFrom((photo.bki.ImageBki.ImageId)other);
@@ -490,13 +428,13 @@ public final class ImageBki {
         if (other.hasImageHash()) {
           setImageHash(other.getImageHash());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasImageHash()) {
+          
           return false;
         }
         return true;
@@ -511,7 +449,7 @@ public final class ImageBki {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (photo.bki.ImageBki.ImageId) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -521,6 +459,7 @@ public final class ImageBki {
       }
       private int bitField0_;
 
+      // required uint64 imageHash = 1;
       private long imageHash_ ;
       /**
        * <code>required uint64 imageHash = 1;</code>
@@ -552,59 +491,22 @@ public final class ImageBki {
         onChanged();
         return this;
       }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:photo.bki.ImageId)
     }
 
-    // @@protoc_insertion_point(class_scope:photo.bki.ImageId)
-    private static final photo.bki.ImageBki.ImageId DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new photo.bki.ImageBki.ImageId();
+      defaultInstance = new ImageId(true);
+      defaultInstance.initFields();
     }
 
-    public static photo.bki.ImageBki.ImageId getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<ImageId>
-        PARSER = new com.google.protobuf.AbstractParser<ImageId>() {
-      public ImageId parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ImageId(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ImageId> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ImageId> getParserForType() {
-      return PARSER;
-    }
-
-    public photo.bki.ImageBki.ImageId getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:photo.bki.ImageId)
   }
 
-  public interface ImageStructOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:photo.bki.ImageStruct)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ImageStructOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string fullUrl = 1;
     /**
      * <code>required string fullUrl = 1;</code>
      */
@@ -619,6 +521,7 @@ public final class ImageBki {
     com.google.protobuf.ByteString
         getFullUrlBytes();
 
+    // required uint32 width = 2;
     /**
      * <code>required uint32 width = 2;</code>
      */
@@ -628,6 +531,7 @@ public final class ImageBki {
      */
     int getWidth();
 
+    // required uint32 height = 3;
     /**
      * <code>required uint32 height = 3;</code>
      */
@@ -637,6 +541,7 @@ public final class ImageBki {
      */
     int getHeight();
 
+    // required .photo.img.ImageFormat format = 4;
     /**
      * <code>required .photo.img.ImageFormat format = 4;</code>
      */
@@ -646,6 +551,7 @@ public final class ImageBki {
      */
     photo.img.ImageDefs.ImageFormat getFormat();
 
+    // required .photo.bki.ImageId imageId = 5;
     /**
      * <code>required .photo.bki.ImageId imageId = 5;</code>
      */
@@ -659,6 +565,7 @@ public final class ImageBki {
      */
     photo.bki.ImageBki.ImageIdOrBuilder getImageIdOrBuilder();
 
+    // required bytes content = 6;
     /**
      * <code>required bytes content = 6;</code>
      */
@@ -671,36 +578,36 @@ public final class ImageBki {
   /**
    * Protobuf type {@code photo.bki.ImageStruct}
    */
-  public  static final class ImageStruct extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:photo.bki.ImageStruct)
-      ImageStructOrBuilder {
-  private static final long serialVersionUID = 0L;
+  public static final class ImageStruct extends
+      com.google.protobuf.GeneratedMessage
+      implements ImageStructOrBuilder {
     // Use ImageStruct.newBuilder() to construct.
-    private ImageStruct(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private ImageStruct(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private ImageStruct() {
-      fullUrl_ = "";
-      width_ = 0;
-      height_ = 0;
-      format_ = 0;
-      content_ = com.google.protobuf.ByteString.EMPTY;
+    private ImageStruct(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final ImageStruct defaultInstance;
+    public static ImageStruct getDefaultInstance() {
+      return defaultInstance;
     }
 
+    public ImageStruct getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private ImageStruct(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -713,16 +620,15 @@ public final class ImageBki {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              fullUrl_ = bs;
+              fullUrl_ = input.readBytes();
               break;
             }
             case 16: {
@@ -742,7 +648,7 @@ public final class ImageBki {
                 unknownFields.mergeVarintField(4, rawValue);
               } else {
                 bitField0_ |= 0x00000008;
-                format_ = rawValue;
+                format_ = value;
               }
               break;
             }
@@ -770,7 +676,7 @@ public final class ImageBki {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -781,16 +687,32 @@ public final class ImageBki {
       return photo.bki.ImageBki.internal_static_photo_bki_ImageStruct_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return photo.bki.ImageBki.internal_static_photo_bki_ImageStruct_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               photo.bki.ImageBki.ImageStruct.class, photo.bki.ImageBki.ImageStruct.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<ImageStruct> PARSER =
+        new com.google.protobuf.AbstractParser<ImageStruct>() {
+      public ImageStruct parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ImageStruct(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ImageStruct> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required string fullUrl = 1;
     public static final int FULLURL_FIELD_NUMBER = 1;
-    private volatile java.lang.Object fullUrl_;
+    private java.lang.Object fullUrl_;
     /**
      * <code>required string fullUrl = 1;</code>
      */
@@ -831,6 +753,7 @@ public final class ImageBki {
       }
     }
 
+    // required uint32 width = 2;
     public static final int WIDTH_FIELD_NUMBER = 2;
     private int width_;
     /**
@@ -846,6 +769,7 @@ public final class ImageBki {
       return width_;
     }
 
+    // required uint32 height = 3;
     public static final int HEIGHT_FIELD_NUMBER = 3;
     private int height_;
     /**
@@ -861,8 +785,9 @@ public final class ImageBki {
       return height_;
     }
 
+    // required .photo.img.ImageFormat format = 4;
     public static final int FORMAT_FIELD_NUMBER = 4;
-    private int format_;
+    private photo.img.ImageDefs.ImageFormat format_;
     /**
      * <code>required .photo.img.ImageFormat format = 4;</code>
      */
@@ -873,10 +798,10 @@ public final class ImageBki {
      * <code>required .photo.img.ImageFormat format = 4;</code>
      */
     public photo.img.ImageDefs.ImageFormat getFormat() {
-      photo.img.ImageDefs.ImageFormat result = photo.img.ImageDefs.ImageFormat.valueOf(format_);
-      return result == null ? photo.img.ImageDefs.ImageFormat.IF_JPEG : result;
+      return format_;
     }
 
+    // required .photo.bki.ImageId imageId = 5;
     public static final int IMAGEID_FIELD_NUMBER = 5;
     private photo.bki.ImageBki.ImageId imageId_;
     /**
@@ -889,15 +814,16 @@ public final class ImageBki {
      * <code>required .photo.bki.ImageId imageId = 5;</code>
      */
     public photo.bki.ImageBki.ImageId getImageId() {
-      return imageId_ == null ? photo.bki.ImageBki.ImageId.getDefaultInstance() : imageId_;
+      return imageId_;
     }
     /**
      * <code>required .photo.bki.ImageId imageId = 5;</code>
      */
     public photo.bki.ImageBki.ImageIdOrBuilder getImageIdOrBuilder() {
-      return imageId_ == null ? photo.bki.ImageBki.ImageId.getDefaultInstance() : imageId_;
+      return imageId_;
     }
 
+    // required bytes content = 6;
     public static final int CONTENT_FIELD_NUMBER = 6;
     private com.google.protobuf.ByteString content_;
     /**
@@ -913,11 +839,18 @@ public final class ImageBki {
       return content_;
     }
 
+    private void initFields() {
+      fullUrl_ = "";
+      width_ = 0;
+      height_ = 0;
+      format_ = photo.img.ImageDefs.ImageFormat.IF_JPEG;
+      imageId_ = photo.bki.ImageBki.ImageId.getDefaultInstance();
+      content_ = com.google.protobuf.ByteString.EMPTY;
+    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasFullUrl()) {
         memoizedIsInitialized = 0;
@@ -953,8 +886,9 @@ public final class ImageBki {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, fullUrl_);
+        output.writeBytes(1, getFullUrlBytes());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeUInt32(2, width_);
@@ -963,24 +897,26 @@ public final class ImageBki {
         output.writeUInt32(3, height_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeEnum(4, format_);
+        output.writeEnum(4, format_.getNumber());
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeMessage(5, getImageId());
+        output.writeMessage(5, imageId_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeBytes(6, content_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, fullUrl_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getFullUrlBytes());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
@@ -992,112 +928,28 @@ public final class ImageBki {
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(4, format_);
+          .computeEnumSize(4, format_.getNumber());
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, getImageId());
+          .computeMessageSize(5, imageId_);
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(6, content_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof photo.bki.ImageBki.ImageStruct)) {
-        return super.equals(obj);
-      }
-      photo.bki.ImageBki.ImageStruct other = (photo.bki.ImageBki.ImageStruct) obj;
-
-      boolean result = true;
-      result = result && (hasFullUrl() == other.hasFullUrl());
-      if (hasFullUrl()) {
-        result = result && getFullUrl()
-            .equals(other.getFullUrl());
-      }
-      result = result && (hasWidth() == other.hasWidth());
-      if (hasWidth()) {
-        result = result && (getWidth()
-            == other.getWidth());
-      }
-      result = result && (hasHeight() == other.hasHeight());
-      if (hasHeight()) {
-        result = result && (getHeight()
-            == other.getHeight());
-      }
-      result = result && (hasFormat() == other.hasFormat());
-      if (hasFormat()) {
-        result = result && format_ == other.format_;
-      }
-      result = result && (hasImageId() == other.hasImageId());
-      if (hasImageId()) {
-        result = result && getImageId()
-            .equals(other.getImageId());
-      }
-      result = result && (hasContent() == other.hasContent());
-      if (hasContent()) {
-        result = result && getContent()
-            .equals(other.getContent());
-      }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasFullUrl()) {
-        hash = (37 * hash) + FULLURL_FIELD_NUMBER;
-        hash = (53 * hash) + getFullUrl().hashCode();
-      }
-      if (hasWidth()) {
-        hash = (37 * hash) + WIDTH_FIELD_NUMBER;
-        hash = (53 * hash) + getWidth();
-      }
-      if (hasHeight()) {
-        hash = (37 * hash) + HEIGHT_FIELD_NUMBER;
-        hash = (53 * hash) + getHeight();
-      }
-      if (hasFormat()) {
-        hash = (37 * hash) + FORMAT_FIELD_NUMBER;
-        hash = (53 * hash) + format_;
-      }
-      if (hasImageId()) {
-        hash = (37 * hash) + IMAGEID_FIELD_NUMBER;
-        hash = (53 * hash) + getImageId().hashCode();
-      }
-      if (hasContent()) {
-        hash = (37 * hash) + CONTENT_FIELD_NUMBER;
-        hash = (53 * hash) + getContent().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static photo.bki.ImageBki.ImageStruct parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static photo.bki.ImageBki.ImageStruct parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static photo.bki.ImageBki.ImageStruct parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1121,57 +973,46 @@ public final class ImageBki {
     }
     public static photo.bki.ImageBki.ImageStruct parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static photo.bki.ImageBki.ImageStruct parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static photo.bki.ImageBki.ImageStruct parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static photo.bki.ImageBki.ImageStruct parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static photo.bki.ImageBki.ImageStruct parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static photo.bki.ImageBki.ImageStruct parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(photo.bki.ImageBki.ImageStruct prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1179,15 +1020,14 @@ public final class ImageBki {
      * Protobuf type {@code photo.bki.ImageStruct}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:photo.bki.ImageStruct)
-        photo.bki.ImageBki.ImageStructOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements photo.bki.ImageBki.ImageStructOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return photo.bki.ImageBki.internal_static_photo_bki_ImageStruct_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return photo.bki.ImageBki.internal_static_photo_bki_ImageStruct_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1200,16 +1040,19 @@ public final class ImageBki {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getImageIdFieldBuilder();
         }
       }
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         fullUrl_ = "";
@@ -1218,10 +1061,10 @@ public final class ImageBki {
         bitField0_ = (bitField0_ & ~0x00000002);
         height_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
-        format_ = 0;
+        format_ = photo.img.ImageDefs.ImageFormat.IF_JPEG;
         bitField0_ = (bitField0_ & ~0x00000008);
         if (imageIdBuilder_ == null) {
-          imageId_ = null;
+          imageId_ = photo.bki.ImageBki.ImageId.getDefaultInstance();
         } else {
           imageIdBuilder_.clear();
         }
@@ -1229,6 +1072,10 @@ public final class ImageBki {
         content_ = com.google.protobuf.ByteString.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000020);
         return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -1285,32 +1132,6 @@ public final class ImageBki {
         return result;
       }
 
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof photo.bki.ImageBki.ImageStruct) {
           return mergeFrom((photo.bki.ImageBki.ImageStruct)other);
@@ -1342,31 +1163,37 @@ public final class ImageBki {
         if (other.hasContent()) {
           setContent(other.getContent());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasFullUrl()) {
+          
           return false;
         }
         if (!hasWidth()) {
+          
           return false;
         }
         if (!hasHeight()) {
+          
           return false;
         }
         if (!hasFormat()) {
+          
           return false;
         }
         if (!hasImageId()) {
+          
           return false;
         }
         if (!hasContent()) {
+          
           return false;
         }
         if (!getImageId().isInitialized()) {
+          
           return false;
         }
         return true;
@@ -1381,7 +1208,7 @@ public final class ImageBki {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (photo.bki.ImageBki.ImageStruct) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1391,6 +1218,7 @@ public final class ImageBki {
       }
       private int bitField0_;
 
+      // required string fullUrl = 1;
       private java.lang.Object fullUrl_ = "";
       /**
        * <code>required string fullUrl = 1;</code>
@@ -1404,12 +1232,9 @@ public final class ImageBki {
       public java.lang.String getFullUrl() {
         java.lang.Object ref = fullUrl_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            fullUrl_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          fullUrl_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1467,6 +1292,7 @@ public final class ImageBki {
         return this;
       }
 
+      // required uint32 width = 2;
       private int width_ ;
       /**
        * <code>required uint32 width = 2;</code>
@@ -1499,6 +1325,7 @@ public final class ImageBki {
         return this;
       }
 
+      // required uint32 height = 3;
       private int height_ ;
       /**
        * <code>required uint32 height = 3;</code>
@@ -1531,7 +1358,8 @@ public final class ImageBki {
         return this;
       }
 
-      private int format_ = 0;
+      // required .photo.img.ImageFormat format = 4;
+      private photo.img.ImageDefs.ImageFormat format_ = photo.img.ImageDefs.ImageFormat.IF_JPEG;
       /**
        * <code>required .photo.img.ImageFormat format = 4;</code>
        */
@@ -1542,8 +1370,7 @@ public final class ImageBki {
        * <code>required .photo.img.ImageFormat format = 4;</code>
        */
       public photo.img.ImageDefs.ImageFormat getFormat() {
-        photo.img.ImageDefs.ImageFormat result = photo.img.ImageDefs.ImageFormat.valueOf(format_);
-        return result == null ? photo.img.ImageDefs.ImageFormat.IF_JPEG : result;
+        return format_;
       }
       /**
        * <code>required .photo.img.ImageFormat format = 4;</code>
@@ -1553,7 +1380,7 @@ public final class ImageBki {
           throw new NullPointerException();
         }
         bitField0_ |= 0x00000008;
-        format_ = value.getNumber();
+        format_ = value;
         onChanged();
         return this;
       }
@@ -1562,13 +1389,14 @@ public final class ImageBki {
        */
       public Builder clearFormat() {
         bitField0_ = (bitField0_ & ~0x00000008);
-        format_ = 0;
+        format_ = photo.img.ImageDefs.ImageFormat.IF_JPEG;
         onChanged();
         return this;
       }
 
-      private photo.bki.ImageBki.ImageId imageId_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
+      // required .photo.bki.ImageId imageId = 5;
+      private photo.bki.ImageBki.ImageId imageId_ = photo.bki.ImageBki.ImageId.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
           photo.bki.ImageBki.ImageId, photo.bki.ImageBki.ImageId.Builder, photo.bki.ImageBki.ImageIdOrBuilder> imageIdBuilder_;
       /**
        * <code>required .photo.bki.ImageId imageId = 5;</code>
@@ -1581,7 +1409,7 @@ public final class ImageBki {
        */
       public photo.bki.ImageBki.ImageId getImageId() {
         if (imageIdBuilder_ == null) {
-          return imageId_ == null ? photo.bki.ImageBki.ImageId.getDefaultInstance() : imageId_;
+          return imageId_;
         } else {
           return imageIdBuilder_.getMessage();
         }
@@ -1622,7 +1450,6 @@ public final class ImageBki {
       public Builder mergeImageId(photo.bki.ImageBki.ImageId value) {
         if (imageIdBuilder_ == null) {
           if (((bitField0_ & 0x00000010) == 0x00000010) &&
-              imageId_ != null &&
               imageId_ != photo.bki.ImageBki.ImageId.getDefaultInstance()) {
             imageId_ =
               photo.bki.ImageBki.ImageId.newBuilder(imageId_).mergeFrom(value).buildPartial();
@@ -1641,7 +1468,7 @@ public final class ImageBki {
        */
       public Builder clearImageId() {
         if (imageIdBuilder_ == null) {
-          imageId_ = null;
+          imageId_ = photo.bki.ImageBki.ImageId.getDefaultInstance();
           onChanged();
         } else {
           imageIdBuilder_.clear();
@@ -1664,20 +1491,19 @@ public final class ImageBki {
         if (imageIdBuilder_ != null) {
           return imageIdBuilder_.getMessageOrBuilder();
         } else {
-          return imageId_ == null ?
-              photo.bki.ImageBki.ImageId.getDefaultInstance() : imageId_;
+          return imageId_;
         }
       }
       /**
        * <code>required .photo.bki.ImageId imageId = 5;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      private com.google.protobuf.SingleFieldBuilder<
           photo.bki.ImageBki.ImageId, photo.bki.ImageBki.ImageId.Builder, photo.bki.ImageBki.ImageIdOrBuilder> 
           getImageIdFieldBuilder() {
         if (imageIdBuilder_ == null) {
-          imageIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          imageIdBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               photo.bki.ImageBki.ImageId, photo.bki.ImageBki.ImageId.Builder, photo.bki.ImageBki.ImageIdOrBuilder>(
-                  getImageId(),
+                  imageId_,
                   getParentForChildren(),
                   isClean());
           imageId_ = null;
@@ -1685,6 +1511,7 @@ public final class ImageBki {
         return imageIdBuilder_;
       }
 
+      // required bytes content = 6;
       private com.google.protobuf.ByteString content_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes content = 6;</code>
@@ -1719,59 +1546,22 @@ public final class ImageBki {
         onChanged();
         return this;
       }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:photo.bki.ImageStruct)
     }
 
-    // @@protoc_insertion_point(class_scope:photo.bki.ImageStruct)
-    private static final photo.bki.ImageBki.ImageStruct DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new photo.bki.ImageBki.ImageStruct();
+      defaultInstance = new ImageStruct(true);
+      defaultInstance.initFields();
     }
 
-    public static photo.bki.ImageBki.ImageStruct getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<ImageStruct>
-        PARSER = new com.google.protobuf.AbstractParser<ImageStruct>() {
-      public ImageStruct parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ImageStruct(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ImageStruct> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ImageStruct> getParserForType() {
-      return PARSER;
-    }
-
-    public photo.bki.ImageBki.ImageStruct getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:photo.bki.ImageStruct)
   }
 
-  public interface ImageRefOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:photo.bki.ImageRef)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ImageRefOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string userId = 1;
     /**
      * <code>required string userId = 1;</code>
      */
@@ -1786,6 +1576,7 @@ public final class ImageBki {
     com.google.protobuf.ByteString
         getUserIdBytes();
 
+    // required .photo.bki.SocNet socNet = 2;
     /**
      * <code>required .photo.bki.SocNet socNet = 2;</code>
      */
@@ -1795,6 +1586,7 @@ public final class ImageBki {
      */
     photo.bki.ImageBki.SocNet getSocNet();
 
+    // optional .photo.bki.ImageId avatarId = 3;
     /**
      * <code>optional .photo.bki.ImageId avatarId = 3;</code>
      */
@@ -1808,6 +1600,7 @@ public final class ImageBki {
      */
     photo.bki.ImageBki.ImageIdOrBuilder getAvatarIdOrBuilder();
 
+    // repeated .photo.bki.ImageId imageIds = 4;
     /**
      * <code>repeated .photo.bki.ImageId imageIds = 4;</code>
      */
@@ -1835,34 +1628,36 @@ public final class ImageBki {
   /**
    * Protobuf type {@code photo.bki.ImageRef}
    */
-  public  static final class ImageRef extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:photo.bki.ImageRef)
-      ImageRefOrBuilder {
-  private static final long serialVersionUID = 0L;
+  public static final class ImageRef extends
+      com.google.protobuf.GeneratedMessage
+      implements ImageRefOrBuilder {
     // Use ImageRef.newBuilder() to construct.
-    private ImageRef(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private ImageRef(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private ImageRef() {
-      userId_ = "";
-      socNet_ = 0;
-      imageIds_ = java.util.Collections.emptyList();
+    private ImageRef(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final ImageRef defaultInstance;
+    public static ImageRef getDefaultInstance() {
+      return defaultInstance;
     }
 
+    public ImageRef getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private ImageRef(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -1875,16 +1670,15 @@ public final class ImageBki {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              userId_ = bs;
+              userId_ = input.readBytes();
               break;
             }
             case 16: {
@@ -1894,7 +1688,7 @@ public final class ImageBki {
                 unknownFields.mergeVarintField(2, rawValue);
               } else {
                 bitField0_ |= 0x00000002;
-                socNet_ = rawValue;
+                socNet_ = value;
               }
               break;
             }
@@ -1916,8 +1710,7 @@ public final class ImageBki {
                 imageIds_ = new java.util.ArrayList<photo.bki.ImageBki.ImageId>();
                 mutable_bitField0_ |= 0x00000008;
               }
-              imageIds_.add(
-                  input.readMessage(photo.bki.ImageBki.ImageId.PARSER, extensionRegistry));
+              imageIds_.add(input.readMessage(photo.bki.ImageBki.ImageId.PARSER, extensionRegistry));
               break;
             }
           }
@@ -1926,7 +1719,7 @@ public final class ImageBki {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
           imageIds_ = java.util.Collections.unmodifiableList(imageIds_);
@@ -1940,16 +1733,32 @@ public final class ImageBki {
       return photo.bki.ImageBki.internal_static_photo_bki_ImageRef_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return photo.bki.ImageBki.internal_static_photo_bki_ImageRef_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               photo.bki.ImageBki.ImageRef.class, photo.bki.ImageBki.ImageRef.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<ImageRef> PARSER =
+        new com.google.protobuf.AbstractParser<ImageRef>() {
+      public ImageRef parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ImageRef(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ImageRef> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required string userId = 1;
     public static final int USERID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object userId_;
+    private java.lang.Object userId_;
     /**
      * <code>required string userId = 1;</code>
      */
@@ -1990,8 +1799,9 @@ public final class ImageBki {
       }
     }
 
+    // required .photo.bki.SocNet socNet = 2;
     public static final int SOCNET_FIELD_NUMBER = 2;
-    private int socNet_;
+    private photo.bki.ImageBki.SocNet socNet_;
     /**
      * <code>required .photo.bki.SocNet socNet = 2;</code>
      */
@@ -2002,10 +1812,10 @@ public final class ImageBki {
      * <code>required .photo.bki.SocNet socNet = 2;</code>
      */
     public photo.bki.ImageBki.SocNet getSocNet() {
-      photo.bki.ImageBki.SocNet result = photo.bki.ImageBki.SocNet.valueOf(socNet_);
-      return result == null ? photo.bki.ImageBki.SocNet.OK : result;
+      return socNet_;
     }
 
+    // optional .photo.bki.ImageId avatarId = 3;
     public static final int AVATARID_FIELD_NUMBER = 3;
     private photo.bki.ImageBki.ImageId avatarId_;
     /**
@@ -2018,15 +1828,16 @@ public final class ImageBki {
      * <code>optional .photo.bki.ImageId avatarId = 3;</code>
      */
     public photo.bki.ImageBki.ImageId getAvatarId() {
-      return avatarId_ == null ? photo.bki.ImageBki.ImageId.getDefaultInstance() : avatarId_;
+      return avatarId_;
     }
     /**
      * <code>optional .photo.bki.ImageId avatarId = 3;</code>
      */
     public photo.bki.ImageBki.ImageIdOrBuilder getAvatarIdOrBuilder() {
-      return avatarId_ == null ? photo.bki.ImageBki.ImageId.getDefaultInstance() : avatarId_;
+      return avatarId_;
     }
 
+    // repeated .photo.bki.ImageId imageIds = 4;
     public static final int IMAGEIDS_FIELD_NUMBER = 4;
     private java.util.List<photo.bki.ImageBki.ImageId> imageIds_;
     /**
@@ -2062,11 +1873,16 @@ public final class ImageBki {
       return imageIds_.get(index);
     }
 
+    private void initFields() {
+      userId_ = "";
+      socNet_ = photo.bki.ImageBki.SocNet.OK;
+      avatarId_ = photo.bki.ImageBki.ImageId.getDefaultInstance();
+      imageIds_ = java.util.Collections.emptyList();
+    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasUserId()) {
         memoizedIsInitialized = 0;
@@ -2094,116 +1910,56 @@ public final class ImageBki {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, userId_);
+        output.writeBytes(1, getUserIdBytes());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeEnum(2, socNet_);
+        output.writeEnum(2, socNet_.getNumber());
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeMessage(3, getAvatarId());
+        output.writeMessage(3, avatarId_);
       }
       for (int i = 0; i < imageIds_.size(); i++) {
         output.writeMessage(4, imageIds_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, userId_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getUserIdBytes());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, socNet_);
+          .computeEnumSize(2, socNet_.getNumber());
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getAvatarId());
+          .computeMessageSize(3, avatarId_);
       }
       for (int i = 0; i < imageIds_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, imageIds_.get(i));
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof photo.bki.ImageBki.ImageRef)) {
-        return super.equals(obj);
-      }
-      photo.bki.ImageBki.ImageRef other = (photo.bki.ImageBki.ImageRef) obj;
-
-      boolean result = true;
-      result = result && (hasUserId() == other.hasUserId());
-      if (hasUserId()) {
-        result = result && getUserId()
-            .equals(other.getUserId());
-      }
-      result = result && (hasSocNet() == other.hasSocNet());
-      if (hasSocNet()) {
-        result = result && socNet_ == other.socNet_;
-      }
-      result = result && (hasAvatarId() == other.hasAvatarId());
-      if (hasAvatarId()) {
-        result = result && getAvatarId()
-            .equals(other.getAvatarId());
-      }
-      result = result && getImageIdsList()
-          .equals(other.getImageIdsList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasUserId()) {
-        hash = (37 * hash) + USERID_FIELD_NUMBER;
-        hash = (53 * hash) + getUserId().hashCode();
-      }
-      if (hasSocNet()) {
-        hash = (37 * hash) + SOCNET_FIELD_NUMBER;
-        hash = (53 * hash) + socNet_;
-      }
-      if (hasAvatarId()) {
-        hash = (37 * hash) + AVATARID_FIELD_NUMBER;
-        hash = (53 * hash) + getAvatarId().hashCode();
-      }
-      if (getImageIdsCount() > 0) {
-        hash = (37 * hash) + IMAGEIDS_FIELD_NUMBER;
-        hash = (53 * hash) + getImageIdsList().hashCode();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static photo.bki.ImageBki.ImageRef parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static photo.bki.ImageBki.ImageRef parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static photo.bki.ImageBki.ImageRef parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2227,57 +1983,46 @@ public final class ImageBki {
     }
     public static photo.bki.ImageBki.ImageRef parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static photo.bki.ImageBki.ImageRef parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static photo.bki.ImageBki.ImageRef parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static photo.bki.ImageBki.ImageRef parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static photo.bki.ImageBki.ImageRef parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static photo.bki.ImageBki.ImageRef parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(photo.bki.ImageBki.ImageRef prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -2285,15 +2030,14 @@ public final class ImageBki {
      * Protobuf type {@code photo.bki.ImageRef}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:photo.bki.ImageRef)
-        photo.bki.ImageBki.ImageRefOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements photo.bki.ImageBki.ImageRefOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return photo.bki.ImageBki.internal_static_photo_bki_ImageRef_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return photo.bki.ImageBki.internal_static_photo_bki_ImageRef_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -2306,25 +2050,28 @@ public final class ImageBki {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getAvatarIdFieldBuilder();
           getImageIdsFieldBuilder();
         }
       }
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         userId_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
-        socNet_ = 0;
+        socNet_ = photo.bki.ImageBki.SocNet.OK;
         bitField0_ = (bitField0_ & ~0x00000002);
         if (avatarIdBuilder_ == null) {
-          avatarId_ = null;
+          avatarId_ = photo.bki.ImageBki.ImageId.getDefaultInstance();
         } else {
           avatarIdBuilder_.clear();
         }
@@ -2336,6 +2083,10 @@ public final class ImageBki {
           imageIdsBuilder_.clear();
         }
         return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -2389,32 +2140,6 @@ public final class ImageBki {
         return result;
       }
 
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof photo.bki.ImageBki.ImageRef) {
           return mergeFrom((photo.bki.ImageBki.ImageRef)other);
@@ -2456,32 +2181,35 @@ public final class ImageBki {
               imageIds_ = other.imageIds_;
               bitField0_ = (bitField0_ & ~0x00000008);
               imageIdsBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getImageIdsFieldBuilder() : null;
             } else {
               imageIdsBuilder_.addAllMessages(other.imageIds_);
             }
           }
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasUserId()) {
+          
           return false;
         }
         if (!hasSocNet()) {
+          
           return false;
         }
         if (hasAvatarId()) {
           if (!getAvatarId().isInitialized()) {
+            
             return false;
           }
         }
         for (int i = 0; i < getImageIdsCount(); i++) {
           if (!getImageIds(i).isInitialized()) {
+            
             return false;
           }
         }
@@ -2497,7 +2225,7 @@ public final class ImageBki {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (photo.bki.ImageBki.ImageRef) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -2507,6 +2235,7 @@ public final class ImageBki {
       }
       private int bitField0_;
 
+      // required string userId = 1;
       private java.lang.Object userId_ = "";
       /**
        * <code>required string userId = 1;</code>
@@ -2520,12 +2249,9 @@ public final class ImageBki {
       public java.lang.String getUserId() {
         java.lang.Object ref = userId_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            userId_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          userId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2583,7 +2309,8 @@ public final class ImageBki {
         return this;
       }
 
-      private int socNet_ = 0;
+      // required .photo.bki.SocNet socNet = 2;
+      private photo.bki.ImageBki.SocNet socNet_ = photo.bki.ImageBki.SocNet.OK;
       /**
        * <code>required .photo.bki.SocNet socNet = 2;</code>
        */
@@ -2594,8 +2321,7 @@ public final class ImageBki {
        * <code>required .photo.bki.SocNet socNet = 2;</code>
        */
       public photo.bki.ImageBki.SocNet getSocNet() {
-        photo.bki.ImageBki.SocNet result = photo.bki.ImageBki.SocNet.valueOf(socNet_);
-        return result == null ? photo.bki.ImageBki.SocNet.OK : result;
+        return socNet_;
       }
       /**
        * <code>required .photo.bki.SocNet socNet = 2;</code>
@@ -2605,7 +2331,7 @@ public final class ImageBki {
           throw new NullPointerException();
         }
         bitField0_ |= 0x00000002;
-        socNet_ = value.getNumber();
+        socNet_ = value;
         onChanged();
         return this;
       }
@@ -2614,13 +2340,14 @@ public final class ImageBki {
        */
       public Builder clearSocNet() {
         bitField0_ = (bitField0_ & ~0x00000002);
-        socNet_ = 0;
+        socNet_ = photo.bki.ImageBki.SocNet.OK;
         onChanged();
         return this;
       }
 
-      private photo.bki.ImageBki.ImageId avatarId_ = null;
-      private com.google.protobuf.SingleFieldBuilderV3<
+      // optional .photo.bki.ImageId avatarId = 3;
+      private photo.bki.ImageBki.ImageId avatarId_ = photo.bki.ImageBki.ImageId.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
           photo.bki.ImageBki.ImageId, photo.bki.ImageBki.ImageId.Builder, photo.bki.ImageBki.ImageIdOrBuilder> avatarIdBuilder_;
       /**
        * <code>optional .photo.bki.ImageId avatarId = 3;</code>
@@ -2633,7 +2360,7 @@ public final class ImageBki {
        */
       public photo.bki.ImageBki.ImageId getAvatarId() {
         if (avatarIdBuilder_ == null) {
-          return avatarId_ == null ? photo.bki.ImageBki.ImageId.getDefaultInstance() : avatarId_;
+          return avatarId_;
         } else {
           return avatarIdBuilder_.getMessage();
         }
@@ -2674,7 +2401,6 @@ public final class ImageBki {
       public Builder mergeAvatarId(photo.bki.ImageBki.ImageId value) {
         if (avatarIdBuilder_ == null) {
           if (((bitField0_ & 0x00000004) == 0x00000004) &&
-              avatarId_ != null &&
               avatarId_ != photo.bki.ImageBki.ImageId.getDefaultInstance()) {
             avatarId_ =
               photo.bki.ImageBki.ImageId.newBuilder(avatarId_).mergeFrom(value).buildPartial();
@@ -2693,7 +2419,7 @@ public final class ImageBki {
        */
       public Builder clearAvatarId() {
         if (avatarIdBuilder_ == null) {
-          avatarId_ = null;
+          avatarId_ = photo.bki.ImageBki.ImageId.getDefaultInstance();
           onChanged();
         } else {
           avatarIdBuilder_.clear();
@@ -2716,20 +2442,19 @@ public final class ImageBki {
         if (avatarIdBuilder_ != null) {
           return avatarIdBuilder_.getMessageOrBuilder();
         } else {
-          return avatarId_ == null ?
-              photo.bki.ImageBki.ImageId.getDefaultInstance() : avatarId_;
+          return avatarId_;
         }
       }
       /**
        * <code>optional .photo.bki.ImageId avatarId = 3;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      private com.google.protobuf.SingleFieldBuilder<
           photo.bki.ImageBki.ImageId, photo.bki.ImageBki.ImageId.Builder, photo.bki.ImageBki.ImageIdOrBuilder> 
           getAvatarIdFieldBuilder() {
         if (avatarIdBuilder_ == null) {
-          avatarIdBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          avatarIdBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               photo.bki.ImageBki.ImageId, photo.bki.ImageBki.ImageId.Builder, photo.bki.ImageBki.ImageIdOrBuilder>(
-                  getAvatarId(),
+                  avatarId_,
                   getParentForChildren(),
                   isClean());
           avatarId_ = null;
@@ -2737,6 +2462,7 @@ public final class ImageBki {
         return avatarIdBuilder_;
       }
 
+      // repeated .photo.bki.ImageId imageIds = 4;
       private java.util.List<photo.bki.ImageBki.ImageId> imageIds_ =
         java.util.Collections.emptyList();
       private void ensureImageIdsIsMutable() {
@@ -2746,7 +2472,7 @@ public final class ImageBki {
          }
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           photo.bki.ImageBki.ImageId, photo.bki.ImageBki.ImageId.Builder, photo.bki.ImageBki.ImageIdOrBuilder> imageIdsBuilder_;
 
       /**
@@ -2878,8 +2604,7 @@ public final class ImageBki {
           java.lang.Iterable<? extends photo.bki.ImageBki.ImageId> values) {
         if (imageIdsBuilder_ == null) {
           ensureImageIdsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, imageIds_);
+          super.addAll(values, imageIds_);
           onChanged();
         } else {
           imageIdsBuilder_.addAllMessages(values);
@@ -2962,11 +2687,11 @@ public final class ImageBki {
            getImageIdsBuilderList() {
         return getImageIdsFieldBuilder().getBuilderList();
       }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           photo.bki.ImageBki.ImageId, photo.bki.ImageBki.ImageId.Builder, photo.bki.ImageBki.ImageIdOrBuilder> 
           getImageIdsFieldBuilder() {
         if (imageIdsBuilder_ == null) {
-          imageIdsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          imageIdsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               photo.bki.ImageBki.ImageId, photo.bki.ImageBki.ImageId.Builder, photo.bki.ImageBki.ImageIdOrBuilder>(
                   imageIds_,
                   ((bitField0_ & 0x00000008) == 0x00000008),
@@ -2976,76 +2701,39 @@ public final class ImageBki {
         }
         return imageIdsBuilder_;
       }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:photo.bki.ImageRef)
     }
 
-    // @@protoc_insertion_point(class_scope:photo.bki.ImageRef)
-    private static final photo.bki.ImageBki.ImageRef DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new photo.bki.ImageBki.ImageRef();
+      defaultInstance = new ImageRef(true);
+      defaultInstance.initFields();
     }
 
-    public static photo.bki.ImageBki.ImageRef getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<ImageRef>
-        PARSER = new com.google.protobuf.AbstractParser<ImageRef>() {
-      public ImageRef parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ImageRef(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ImageRef> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ImageRef> getParserForType() {
-      return PARSER;
-    }
-
-    public photo.bki.ImageBki.ImageRef getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:photo.bki.ImageRef)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_photo_bki_ImageId_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_photo_bki_ImageId_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_photo_bki_ImageStruct_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_photo_bki_ImageStruct_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_photo_bki_ImageRef_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_photo_bki_ImageRef_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -3058,41 +2746,40 @@ public final class ImageBki {
       "f\022\016\n\006userId\030\001 \002(\t\022!\n\006socNet\030\002 \002(\0162\021.phot" +
       "o.bki.SocNet\022$\n\010avatarId\030\003 \001(\0132\022.photo.b" +
       "ki.ImageId\022$\n\010imageIds\030\004 \003(\0132\022.photo.bki" +
-      ".ImageId* \n\006SocNet\022\006\n\002OK\020\000\022\006\n\002VK\020\001\022\006\n\002MM" +
+      ".ImageId* \n\006SocNet\022\006\n\002OK\020\000\022\006\n\002VK\020\001\022\006\n\002MM",
       "\020\002B\nB\010ImageBki"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_photo_bki_ImageId_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_photo_bki_ImageId_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_photo_bki_ImageId_descriptor,
+              new java.lang.String[] { "ImageHash", });
+          internal_static_photo_bki_ImageStruct_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_photo_bki_ImageStruct_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_photo_bki_ImageStruct_descriptor,
+              new java.lang.String[] { "FullUrl", "Width", "Height", "Format", "ImageId", "Content", });
+          internal_static_photo_bki_ImageRef_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_photo_bki_ImageRef_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_photo_bki_ImageRef_descriptor,
+              new java.lang.String[] { "UserId", "SocNet", "AvatarId", "ImageIds", });
+          return null;
+        }
+      };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           photo.img.ImageDefs.getDescriptor(),
         }, assigner);
-    internal_static_photo_bki_ImageId_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_photo_bki_ImageId_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_photo_bki_ImageId_descriptor,
-        new java.lang.String[] { "ImageHash", });
-    internal_static_photo_bki_ImageStruct_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_photo_bki_ImageStruct_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_photo_bki_ImageStruct_descriptor,
-        new java.lang.String[] { "FullUrl", "Width", "Height", "Format", "ImageId", "Content", });
-    internal_static_photo_bki_ImageRef_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_photo_bki_ImageRef_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_photo_bki_ImageRef_descriptor,
-        new java.lang.String[] { "UserId", "SocNet", "AvatarId", "ImageIds", });
-    photo.img.ImageDefs.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

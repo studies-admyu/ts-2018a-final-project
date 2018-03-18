@@ -6,18 +6,12 @@ package photo.storage;
 public final class GenericStorage {
   private GenericStorage() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface document_lengthOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:photo.storage.document_length)
-      com.google.protobuf.MessageOrBuilder {
+  public interface document_lengthOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required fixed32 length = 1;
     /**
      * <code>required fixed32 length = 1;</code>
      */
@@ -30,32 +24,36 @@ public final class GenericStorage {
   /**
    * Protobuf type {@code photo.storage.document_length}
    */
-  public  static final class document_length extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:photo.storage.document_length)
-      document_lengthOrBuilder {
-  private static final long serialVersionUID = 0L;
+  public static final class document_length extends
+      com.google.protobuf.GeneratedMessage
+      implements document_lengthOrBuilder {
     // Use document_length.newBuilder() to construct.
-    private document_length(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private document_length(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private document_length() {
-      length_ = 0;
+    private document_length(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final document_length defaultInstance;
+    public static document_length getDefaultInstance() {
+      return defaultInstance;
     }
 
+    public document_length getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private document_length(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -68,8 +66,8 @@ public final class GenericStorage {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -85,7 +83,7 @@ public final class GenericStorage {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -96,14 +94,30 @@ public final class GenericStorage {
       return photo.storage.GenericStorage.internal_static_photo_storage_document_length_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return photo.storage.GenericStorage.internal_static_photo_storage_document_length_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               photo.storage.GenericStorage.document_length.class, photo.storage.GenericStorage.document_length.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<document_length> PARSER =
+        new com.google.protobuf.AbstractParser<document_length>() {
+      public document_length parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new document_length(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<document_length> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required fixed32 length = 1;
     public static final int LENGTH_FIELD_NUMBER = 1;
     private int length_;
     /**
@@ -119,11 +133,13 @@ public final class GenericStorage {
       return length_;
     }
 
+    private void initFields() {
+      length_ = 0;
+    }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasLength()) {
         memoizedIsInitialized = 0;
@@ -135,14 +151,16 @@ public final class GenericStorage {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeFixed32(1, length_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -150,58 +168,18 @@ public final class GenericStorage {
         size += com.google.protobuf.CodedOutputStream
           .computeFixed32Size(1, length_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
     }
 
+    private static final long serialVersionUID = 0L;
     @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof photo.storage.GenericStorage.document_length)) {
-        return super.equals(obj);
-      }
-      photo.storage.GenericStorage.document_length other = (photo.storage.GenericStorage.document_length) obj;
-
-      boolean result = true;
-      result = result && (hasLength() == other.hasLength());
-      if (hasLength()) {
-        result = result && (getLength()
-            == other.getLength());
-      }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      if (hasLength()) {
-        hash = (37 * hash) + LENGTH_FIELD_NUMBER;
-        hash = (53 * hash) + getLength();
-      }
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static photo.storage.GenericStorage.document_length parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static photo.storage.GenericStorage.document_length parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static photo.storage.GenericStorage.document_length parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -225,57 +203,46 @@ public final class GenericStorage {
     }
     public static photo.storage.GenericStorage.document_length parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static photo.storage.GenericStorage.document_length parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static photo.storage.GenericStorage.document_length parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static photo.storage.GenericStorage.document_length parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static photo.storage.GenericStorage.document_length parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static photo.storage.GenericStorage.document_length parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(photo.storage.GenericStorage.document_length prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -283,15 +250,14 @@ public final class GenericStorage {
      * Protobuf type {@code photo.storage.document_length}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:photo.storage.document_length)
-        photo.storage.GenericStorage.document_lengthOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements photo.storage.GenericStorage.document_lengthOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return photo.storage.GenericStorage.internal_static_photo_storage_document_length_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return photo.storage.GenericStorage.internal_static_photo_storage_document_length_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -304,20 +270,27 @@ public final class GenericStorage {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         length_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
       }
 
       public com.google.protobuf.Descriptors.Descriptor
@@ -350,32 +323,6 @@ public final class GenericStorage {
         return result;
       }
 
-      public Builder clone() {
-        return (Builder) super.clone();
-      }
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
-      }
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
-      }
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
-      }
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
-      }
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
-      }
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof photo.storage.GenericStorage.document_length) {
           return mergeFrom((photo.storage.GenericStorage.document_length)other);
@@ -390,13 +337,13 @@ public final class GenericStorage {
         if (other.hasLength()) {
           setLength(other.getLength());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasLength()) {
+          
           return false;
         }
         return true;
@@ -411,7 +358,7 @@ public final class GenericStorage {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (photo.storage.GenericStorage.document_length) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -421,6 +368,7 @@ public final class GenericStorage {
       }
       private int bitField0_;
 
+      // required fixed32 length = 1;
       private int length_ ;
       /**
        * <code>required fixed32 length = 1;</code>
@@ -452,66 +400,29 @@ public final class GenericStorage {
         onChanged();
         return this;
       }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:photo.storage.document_length)
     }
 
-    // @@protoc_insertion_point(class_scope:photo.storage.document_length)
-    private static final photo.storage.GenericStorage.document_length DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new photo.storage.GenericStorage.document_length();
+      defaultInstance = new document_length(true);
+      defaultInstance.initFields();
     }
 
-    public static photo.storage.GenericStorage.document_length getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<document_length>
-        PARSER = new com.google.protobuf.AbstractParser<document_length>() {
-      public document_length parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new document_length(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<document_length> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<document_length> getParserForType() {
-      return PARSER;
-    }
-
-    public photo.storage.GenericStorage.document_length getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:photo.storage.document_length)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_photo_storage_document_length_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_photo_storage_document_length_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -519,23 +430,23 @@ public final class GenericStorage {
       "ngth\022\016\n\006length\030\001 \002(\007B\020B\016GenericStorage"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_photo_storage_document_length_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_photo_storage_document_length_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_photo_storage_document_length_descriptor,
+              new java.lang.String[] { "Length", });
+          return null;
+        }
+      };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_photo_storage_document_length_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_photo_storage_document_length_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_photo_storage_document_length_descriptor,
-        new java.lang.String[] { "Length", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

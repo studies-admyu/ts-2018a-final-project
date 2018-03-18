@@ -6,13 +6,7 @@ package photo.img;
 public final class ImageDefs {
   private ImageDefs() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   /**
    * Protobuf enum {@code photo.img.ImageFormat}
@@ -22,35 +16,35 @@ public final class ImageDefs {
     /**
      * <code>IF_JPEG = 0;</code>
      */
-    IF_JPEG(0),
+    IF_JPEG(0, 0),
     /**
      * <code>IF_PNG = 1;</code>
      */
-    IF_PNG(1),
+    IF_PNG(1, 1),
     /**
      * <code>IF_GIF = 2;</code>
      */
-    IF_GIF(2),
+    IF_GIF(2, 2),
     /**
      * <code>IF_UNKNOWN = 3;</code>
      */
-    IF_UNKNOWN(3),
+    IF_UNKNOWN(3, 3),
     /**
      * <code>IF_ICO = 4;</code>
      */
-    IF_ICO(4),
+    IF_ICO(4, 4),
     /**
      * <code>IF_BMP = 5;</code>
      */
-    IF_BMP(5),
+    IF_BMP(5, 5),
     /**
      * <code>IF_WEBP = 6;</code>
      */
-    IF_WEBP(6),
+    IF_WEBP(6, 6),
     /**
      * <code>IF_SVG = 7;</code>
      */
-    IF_SVG(7),
+    IF_SVG(7, 7),
     ;
 
     /**
@@ -87,19 +81,9 @@ public final class ImageDefs {
     public static final int IF_SVG_VALUE = 7;
 
 
-    public final int getNumber() {
-      return value;
-    }
+    public final int getNumber() { return value; }
 
-    /**
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
     public static ImageFormat valueOf(int value) {
-      return forNumber(value);
-    }
-
-    public static ImageFormat forNumber(int value) {
       switch (value) {
         case 0: return IF_JPEG;
         case 1: return IF_PNG;
@@ -117,17 +101,17 @@ public final class ImageDefs {
         internalGetValueMap() {
       return internalValueMap;
     }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        ImageFormat> internalValueMap =
+    private static com.google.protobuf.Internal.EnumLiteMap<ImageFormat>
+        internalValueMap =
           new com.google.protobuf.Internal.EnumLiteMap<ImageFormat>() {
             public ImageFormat findValueByNumber(int number) {
-              return ImageFormat.forNumber(number);
+              return ImageFormat.valueOf(number);
             }
           };
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
+      return getDescriptor().getValues().get(index);
     }
     public final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptorForType() {
@@ -149,9 +133,11 @@ public final class ImageDefs {
       return VALUES[desc.getIndex()];
     }
 
+    private final int index;
     private final int value;
 
-    private ImageFormat(int value) {
+    private ImageFormat(int index, int value) {
+      this.index = index;
       this.value = value;
     }
 
@@ -163,7 +149,7 @@ public final class ImageDefs {
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -173,13 +159,13 @@ public final class ImageDefs {
       "\005\022\013\n\007IF_WEBP\020\006\022\n\n\006IF_SVG\020\007B\013B\tImageDefs"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          return null;
+        }
+      };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
