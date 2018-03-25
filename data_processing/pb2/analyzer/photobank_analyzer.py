@@ -74,13 +74,8 @@ class PhotobankAnalyzer:
         PhotobankAnalyzer._download_model(home_output_filename)
         self._face_detector = cv2.CascadeClassifier(home_output_filename)
     
-    def analyze(self, rgb_image):
-        rgb_array = np.array(rgb_image)
-        if len(rgb_array.shape) > 2:
-            grayscale_array = cv2.cvtColor(rgb_array, cv2.COLOR_BGR2GRAY)
-        else:
-            grayscale_array = rgb_array
-        
+    def analyze(self, image):
+        grayscale_array = np.array(image.convert('L'))
         report_dict = {
             'height': grayscale_array.shape[0],
             'width': grayscale_array.shape[1],

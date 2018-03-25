@@ -76,9 +76,9 @@ def _analyze(exec_details):
                 sys.stderr.write('Warning: file %s not found\n' % (image_file))
                 continue
             try:
-                rgb_image = Image.open(image_file)
+                image = Image.open(image_file)
                 report_dict = {'filename': image_file, 'type': IMAGE_FILE_TYPE}
-                report_dict.update(analyzer.analyze(rgb_image))
+                report_dict.update(analyzer.analyze(image))
                 o.write(json.dumps(report_dict) + '\n')
             except Exception as e:
                 sys.stderr.write(
@@ -126,12 +126,12 @@ def _analyze_gs(exec_details):
             for image_doc in Pb2DocumentReader(gs_file):
                 try:
                     image_data = io.BytesIO(image_doc.content)
-                    rgb_image = Image.open(image_data)
+                    image = Image.open(image_data)
                     report_dict = {
                         'filename': gs_file, 'type': GS_FILE_TYPE,
                         'member': str(image_doc.imageId.imageHash)
                     }
-                    report_dict.update(analyzer.analyze(rgb_image))
+                    report_dict.update(analyzer.analyze(image))
                     o.write(json.dumps(report_dict) + '\n')
                 except Exception as e:
                     sys.stderr.write(
@@ -188,12 +188,12 @@ def _analyze_tar(exec_details):
                         continue
                     with itar.extractfile(image_info) as f:
                         try:
-                            rgb_image = Image.open(f)
+                            image = Image.open(f)
                             report_dict = {
                                 'filename': tar_file, 'type': TAR_FILE_TYPE,
                                 'member': image_info.name
                             }
-                            report_dict.update(analyzer.analyze(rgb_image))
+                            report_dict.update(analyzer.analyze(image))
                             o.write(json.dumps(report_dict) + '\n')
                         except Exception as e:
                             sys.stderr.write(
