@@ -80,7 +80,12 @@ def _analyze(exec_details):
                 report_dict = {'filename': image_file, 'type': IMAGE_FILE_TYPE}
                 report_dict.update(analyzer.analyze(rgb_image))
                 o.write(json.dumps(report_dict) + '\n')
-            except Exception:
+            except Exception as e:
+                sys.stderr.write(
+                    'WARNING: Error during %s processing: %s\n' % (
+                        image_file, str(e)
+                    )
+                )
                 continue
 
 def analyze(output_file, image_files):
@@ -128,7 +133,12 @@ def _analyze_gs(exec_details):
                     }
                     report_dict.update(analyzer.analyze(rgb_image))
                     o.write(json.dumps(report_dict) + '\n')
-                except Exception:
+                except Exception as e:
+                    sys.stderr.write(
+                    'WARNING: Error during %s:%s processing: %s\n' % (
+                        gs_file, report_dict['member'], str(e)
+                        )
+                    )
                     continue
 
 def analyze_gs(output_file, gs_files):
@@ -185,8 +195,17 @@ def _analyze_tar(exec_details):
                             }
                             report_dict.update(analyzer.analyze(rgb_image))
                             o.write(json.dumps(report_dict) + '\n')
-                        except Exception:
+                        except Exception as e:
+                            sys.stderr.write(
+                                (
+                                    'WARNING: Error during %s:%s ' +
+                                    'processing: %s\n'
+                                ) % (
+                                    tar_file, report_dict['member'], str(e)
+                                )
+                            )
                             continue
+
 def analyze_tar(output_file, tar_files):
     tar_files_found = _unglob_files(tar_files)
     return _analyze_tar((output_file, tar_files_found))
