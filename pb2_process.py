@@ -123,7 +123,13 @@ def _analyze_gs(exec_details):
             if not os.path.isfile(gs_file):
                 sys.stderr.write('Warning: file %s not found\n' % (gs_file))
                 continue
-            for image_doc in Pb2DocumentReader(gs_file):
+            for image_doc, occured_exception in Pb2DocumentReader(
+                    gs_file, yield_exceptions = True
+            ):
+                if occured_exception is not None:
+                    sys.stderr.write('WARNING: %s\n' % (occured_exception))
+                    continue
+                
                 try:
                     image_data = io.BytesIO(image_doc.content)
                     image = Image.open(image_data)
@@ -323,7 +329,15 @@ def _rextract(exec_details):
         gs_output_dir = os.path.join(output_dir, os.path.basename(gs_file))
         if not os.path.isdir(gs_output_dir):
             os.mkdir(gs_output_dir)
-        for image_doc in Pb2DocumentReader(gs_file):
+        for image_doc, occured_exception in Pb2DocumentReader(
+            gs_file, yield_exceptions = True
+        ):
+            if occured_exception is not None:
+                sys.stderr.write(
+                    'WARNING: no such an input file %s\n' % (input_file)
+                )
+                continue
+            
             image_hash = str(image_doc.imageId.imageHash)
             if image_hash in gs_extracting_dict[gs_file]:
                 with open(
