@@ -25,9 +25,9 @@ ANALYZE_OUTPUT_FILENAME_PATTERN = 'analyze_out_%s.jsonl'
 RFITLER_OUTPUT_FILENAME_PATTERN = 'rfilter_out_%s.jsonl'
 
 PI4 = np.arctan(1) * 16.0
-MIN_HEIGHT = 200
-MIN_WIDTH = 200
-MIN_FACE_RATIO = 0.00075
+MIN_HEIGHT = 600
+MIN_WIDTH = 600
+MIN_FACE_RATIO = 0.0001
 
 def _run_mp(proc_num, fun, split_args):
     if not isinstance(proc_num, int) or (proc_num < 1):
