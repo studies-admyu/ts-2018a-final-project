@@ -11,6 +11,7 @@ class Pb2DocumentReader:
     _DOCUMENT_LENGTH_SIZE = 5
     def __init__(self, path):
         self._stream = None
+        self._filename = path
         
         if not os.path.isfile(path):
             raise Exception('File %s is not found' % (path))
@@ -29,16 +30,22 @@ class Pb2DocumentReader:
             if len(document_length_bytes) < self._DOCUMENT_LENGTH_SIZE:
                 return
             
-            document_len_struct = document_length()
-            document_len_struct.ParseFromString(
-                document_length_bytes
-            )
-            image_struct_size = document_len_struct.length
+            try:
+                document_len_struct = document_length()
+                document_len_struct.ParseFromString(
+                    document_length_bytes
+                )
+                image_struct_size = document_len_struct.length
             
-            img_struct_bytes = self._stream.read(image_struct_size)
-            img_struct = ImageStruct()
-            img_struct.ParseFromString(
-                img_struct_bytes
-            )
+                img_struct_bytes = self._stream.read(image_struct_size)
+                img_struct = ImageStruct()
+                img_struct.ParseFromString(
+                    img_struct_bytes
+                )
+                
+                yield img_struct
             
-            yield img_struct
+            except Exception as e:
+                raise Exception(
+                    'Reading exception (%s): %s' % (self._filename, e)
+                )
