@@ -25,9 +25,9 @@ ANALYZE_OUTPUT_FILENAME_PATTERN = 'analyze_out_%s.jsonl'
 RFITLER_OUTPUT_FILENAME_PATTERN = 'rfilter_out_%s.jsonl'
 
 PI4 = np.arctan(1) * 16.0
-MIN_HEIGHT = 200
-MIN_WIDTH = 200
-MIN_FACE_RATIO = 0.00075
+MIN_HEIGHT = 600
+MIN_WIDTH = 600
+MIN_FACE_RATIO = 0.0001
 
 def _run_mp(proc_num, fun, split_args):
     if not isinstance(proc_num, int) or (proc_num < 1):
@@ -76,11 +76,16 @@ def _analyze(exec_details):
                 sys.stderr.write('Warning: file %s not found\n' % (image_file))
                 continue
             try:
-                rgb_image = Image.open(image_file)
+                image = Image.open(image_file)
                 report_dict = {'filename': image_file, 'type': IMAGE_FILE_TYPE}
-                report_dict.update(analyzer.analyze(rgb_image))
+                report_dict.update(analyzer.analyze(image))
                 o.write(json.dumps(report_dict) + '\n')
-            except Exception:
+            except Exception as e:
+                sys.stderr.write(
+                    'WARNING: Error during %s processing: %s\n' % (
+                        image_file, str(e)
+                    )
+                )
                 continue
 
 def analyze(output_file, image_files):
@@ -118,17 +123,28 @@ def _analyze_gs(exec_details):
             if not os.path.isfile(gs_file):
                 sys.stderr.write('Warning: file %s not found\n' % (gs_file))
                 continue
-            for image_doc in Pb2DocumentReader(gs_file):
+            for image_doc, occured_exception in Pb2DocumentReader(
+                    gs_file, yield_exceptions = True
+            ):
+                if occured_exception is not None:
+                    sys.stderr.write('WARNING: %s\n' % (occured_exception))
+                    continue
+                
                 try:
                     image_data = io.BytesIO(image_doc.content)
-                    rgb_image = Image.open(image_data)
+                    image = Image.open(image_data)
                     report_dict = {
                         'filename': gs_file, 'type': GS_FILE_TYPE,
                         'member': str(image_doc.imageId.imageHash)
                     }
-                    report_dict.update(analyzer.analyze(rgb_image))
+                    report_dict.update(analyzer.analyze(image))
                     o.write(json.dumps(report_dict) + '\n')
-                except Exception:
+                except Exception as e:
+                    sys.stderr.write(
+                    'WARNING: Error during %s:%s processing: %s\n' % (
+                        gs_file, report_dict['member'], str(e)
+                        )
+                    )
                     continue
 
 def analyze_gs(output_file, gs_files):
@@ -178,15 +194,24 @@ def _analyze_tar(exec_details):
                         continue
                     with itar.extractfile(image_info) as f:
                         try:
-                            rgb_image = Image.open(f)
+                            image = Image.open(f)
                             report_dict = {
                                 'filename': tar_file, 'type': TAR_FILE_TYPE,
                                 'member': image_info.name
                             }
-                            report_dict.update(analyzer.analyze(rgb_image))
+                            report_dict.update(analyzer.analyze(image))
                             o.write(json.dumps(report_dict) + '\n')
-                        except Exception:
+                        except Exception as e:
+                            sys.stderr.write(
+                                (
+                                    'WARNING: Error during %s:%s ' +
+                                    'processing: %s\n'
+                                ) % (
+                                    tar_file, report_dict['member'], str(e)
+                                )
+                            )
                             continue
+
 def analyze_tar(output_file, tar_files):
     tar_files_found = _unglob_files(tar_files)
     return _analyze_tar((output_file, tar_files_found))
@@ -304,7 +329,15 @@ def _rextract(exec_details):
         gs_output_dir = os.path.join(output_dir, os.path.basename(gs_file))
         if not os.path.isdir(gs_output_dir):
             os.mkdir(gs_output_dir)
-        for image_doc in Pb2DocumentReader(gs_file):
+        for image_doc, occured_exception in Pb2DocumentReader(
+            gs_file, yield_exceptions = True
+        ):
+            if occured_exception is not None:
+                sys.stderr.write(
+                    'WARNING: no such an input file %s\n' % (input_file)
+                )
+                continue
+            
             image_hash = str(image_doc.imageId.imageHash)
             if image_hash in gs_extracting_dict[gs_file]:
                 with open(

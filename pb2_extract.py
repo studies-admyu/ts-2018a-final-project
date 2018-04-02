@@ -27,5 +27,5 @@ if __name__ == '__main__':
                     f.write(image.content)
             
         except Exception as e:
-            sys.stderr.write('ERROR: %s', str(e))
+            sys.stderr.write(('ERROR: %s\n' % str(e)))
             continue
