@@ -118,6 +118,7 @@ def analyze_mp(proc_num, output_dir, image_files):
 
 def _analyze_gs(exec_details):
     output_file, gs_files = exec_details[0], exec_details[1]
+    fetch_urls = exec_details[2]
     analyzer = PhotobankAnalyzer()
     
     with open(output_file, 'w') as o:
@@ -155,6 +156,10 @@ def _analyze_gs(exec_details):
                     )
                     continue
                 
+                # Check whenever we need to process urls
+                if not fetch_urls:
+                    continue
+                
                 # Need to fetch image to analyze
                 # (metadata doesn't contain original image size)
                 try:
@@ -189,11 +194,11 @@ def _analyze_gs(exec_details):
                     )
                     continue
 
-def analyze_gs(output_file, gs_files):
+def analyze_gs(output_file, gs_files, fetch_urls = False):
     gs_files_found = _unglob_files(gs_files)
-    return _analyze_gs((output_file, gs_files_found))
+    return _analyze_gs((output_file, gs_files_found, fetch_urls))
 
-def analyze_mp_gs(proc_num, output_dir, gs_files):
+def analyze_mp_gs(proc_num, output_dir, gs_files, fetch_urls = False):
     gs_files_found = _unglob_files(gs_files)
     split_gs_files = _split_args(proc_num, gs_files_found)
     
@@ -205,7 +210,8 @@ def analyze_mp_gs(proc_num, output_dir, gs_files):
     args_to_run = [
         (
             os.path.join(output_dir, output_filename_pattern % (i)),
-            split_gs_files[i]
+            split_gs_files[i],
+            fetch_urls
         )
         for i in range(proc_num)
     ]
@@ -463,8 +469,7 @@ if __name__ == '__main__':
         'analyze', help = 'Analyzes *.jpeg and *.png files key parameters'
     )
     aparser_analyze.add_argument(
-        'output_file', metavar = 'output_file', type = str,
-        help = 'output report file with parameters'
+        'output_file', type = str, help = 'output report file with parameters'
     )
     aparser_analyze.add_argument(
         'image_files', metavar = 'image_file', type = str, nargs = '+',
@@ -480,7 +485,7 @@ if __name__ == '__main__':
         help = 'processes count to run'
     )
     aparser_analyze_mp.add_argument(
-        'output_dir', metavar = 'output_dir', type = str,
+        'output_dir', type = str,
         help = 'output directory to store report files'
     )
     aparser_analyze_mp.add_argument(
@@ -493,12 +498,15 @@ if __name__ == '__main__':
         'parameters'
     )
     aparser_analyze_gs.add_argument(
-        'output_file', metavar = 'output_file', type = str,
-        help = 'output report file with parameters'
+        'output_file', type = str, help = 'output report file with parameters'
     )
     aparser_analyze_gs.add_argument(
         'gs_files', metavar = 'gs_file', type = str, nargs = '+',
         help = 'generic storage archive for analysis'
+    )
+    aparser_analyze_gs.add_argument(
+        '-f', '--fetch_urls', action = 'store_true',
+        help = 'also fetch and analyze images by using gs urls'
     )
     
     aparser_analyze_mp_gs = asubparsers.add_parser(
@@ -510,12 +518,16 @@ if __name__ == '__main__':
         help = 'processes count to run'
     )
     aparser_analyze_mp_gs.add_argument(
-        'output_dir', metavar = 'output_dir', type = str,
+        'output_dir', type = str,
         help = 'output directory to store report files'
     )
     aparser_analyze_mp_gs.add_argument(
         'gs_files', metavar = 'gs_file', type = str, nargs = '+',
         help = 'generic storage archive for analysis'
+    )
+    aparser_analyze_mp_gs.add_argument(
+        '-f', '--fetch_urls', action = 'store_true',
+        help = 'also fetch and analyze images by using gs urls'
     )
     
     aparser_analyze_tar = asubparsers.add_parser(
@@ -523,7 +535,7 @@ if __name__ == '__main__':
         'parameters'
     )
     aparser_analyze_tar.add_argument(
-        'output_file', metavar = 'output_file', type = str,
+        'output_file', type = str,
         help = 'output report file with parameters'
     )
     aparser_analyze_tar.add_argument(
@@ -540,7 +552,7 @@ if __name__ == '__main__':
         help = 'processes count to run'
     )
     aparser_analyze_mp_tar.add_argument(
-        'output_dir', metavar = 'output_dir', type = str,
+        'output_dir', type = str,
         help = 'output directory to store report files'
     )
     aparser_analyze_mp_tar.add_argument(
@@ -617,9 +629,11 @@ if __name__ == '__main__':
     elif args.command == 'analyze-mp':
         analyze_mp(args.proc_num, args.output_dir, args.image_files)
     elif args.command == 'analyze-gs':
-        analyze_gs(args.output_file, args.gs_files)
+        analyze_gs(args.output_file, args.gs_files, args.fetch_urls)
     elif args.command == 'analyze-mp-gs':
-        analyze_mp_gs(args.proc_num, args.output_dir, args.gs_files)
+        analyze_mp_gs(
+            args.proc_num, args.output_dir, args.gs_files, args.fetch_urls
+        )
     elif args.command == 'analyze-tar':
         analyze_tar(args.output_file, args.tar_files)
     elif args.command == 'analyze-mp-tar':
