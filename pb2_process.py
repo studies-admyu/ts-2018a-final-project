@@ -84,9 +84,8 @@ def _analyze(exec_details):
                 o.write(json.dumps(report_dict) + '\n')
             except Exception as e:
                 sys.stderr.write(
-                    'WARNING: error during \'%s\' processing: %s\n' % (
-                        image_file, e
-                    )
+                    'WARNING: error during \'%s\' processing: %s\n' %
+                    (image_file, e)
                 )
                 continue
 
@@ -133,8 +132,8 @@ def _analyze_gs(exec_details):
             ):
                 if occured_exception is not None:
                     sys.stderr.write(
-                        'WARNING: error during processing: %s\n' %
-                        (occured_exception)
+                        'WARNING: error during \'%s\' processing: %s\n' %
+                        (gs_file, occured_exception)
                     )
                     continue
                 
@@ -256,9 +255,7 @@ def _analyze_tar(exec_details):
                                 (
                                     'WARNING: error during %s:%s ' +
                                     'processing: %s\n'
-                                ) % (
-                                    tar_file, image_info.name, e
-                                )
+                                ) % (tar_file, image_info.name, e)
                             )
                             continue
 
@@ -390,8 +387,8 @@ def _rextract(exec_details):
         ):
             if occured_exception is not None:
                 sys.stderr.write(
-                    'WARNING: error during processing: %s\n' %
-                    (occured_exception)
+                    'WARNING: error during \'%s\' processing: %s\n' %
+                    (gs_file, occured_exception)
                 )
                 continue
             
