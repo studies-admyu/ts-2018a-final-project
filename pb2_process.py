@@ -5,6 +5,7 @@ import glob
 import io
 import json
 import os
+import requests
 import sys
 import tarfile
 
@@ -19,6 +20,7 @@ from data_processing.pb2.analyzer.photobank_analyzer import PhotobankAnalyzer
 
 IMAGE_FILE_TYPE = 'image'
 GS_FILE_TYPE = 'gs'
+GS_URL_FILE_TYPE = 'gs-url'
 TAR_FILE_TYPE = 'tar'
 
 ANALYZE_OUTPUT_FILENAME_PATTERN = 'analyze_out_%s.jsonl'
@@ -73,7 +75,7 @@ def _analyze(exec_details):
     with open(output_file, 'w') as o:
         for image_file in image_files:
             if not os.path.isfile(image_file):
-                sys.stderr.write('Warning: file %s not found\n' % (image_file))
+                sys.stderr.write('WARNING: file %s not found\n' % (image_file))
                 continue
             try:
                 image = Image.open(image_file)
@@ -82,8 +84,8 @@ def _analyze(exec_details):
                 o.write(json.dumps(report_dict) + '\n')
             except Exception as e:
                 sys.stderr.write(
-                    'WARNING: Error during %s processing: %s\n' % (
-                        image_file, str(e)
+                    'WARNING: error during \'%s\' processing: %s\n' % (
+                        image_file, e
                     )
                 )
                 continue
@@ -121,18 +123,25 @@ def _analyze_gs(exec_details):
     with open(output_file, 'w') as o:
         for gs_file in gs_files:
             if not os.path.isfile(gs_file):
-                sys.stderr.write('Warning: file %s not found\n' % (gs_file))
+                sys.stderr.write(
+                    'WARNING: file \'%s\' not found\n' % (gs_file)
+                )
                 continue
             for image_doc, occured_exception in Pb2DocumentReader(
-                    gs_file, yield_exceptions = True
+                gs_file, yield_exceptions = True
             ):
                 if occured_exception is not None:
-                    sys.stderr.write('WARNING: %s\n' % (occured_exception))
+                    sys.stderr.write(
+                        'WARNING: error during processing: %s\n' %
+                        (occured_exception)
+                    )
                     continue
                 
                 try:
                     image_data = io.BytesIO(image_doc.content)
                     image = Image.open(image_data)
+                    
+                    # Add a thumb
                     report_dict = {
                         'filename': gs_file, 'type': GS_FILE_TYPE,
                         'member': str(image_doc.imageId.imageHash)
@@ -141,9 +150,42 @@ def _analyze_gs(exec_details):
                     o.write(json.dumps(report_dict) + '\n')
                 except Exception as e:
                     sys.stderr.write(
-                    'WARNING: Error during %s:%s processing: %s\n' % (
-                        gs_file, report_dict['member'], str(e)
+                        'WARNING: error during %s:%s processing: %s\n' %
+                        (gs_file, image_doc.imageId.imageHash, e)
+                    )
+                    continue
+                
+                # Need to fetch image to analyze
+                # (metadata doesn't contain original image size)
+                try:
+                    response = requests.get(image_doc.fullUrl)
+                    if response.status_code != 200:
+                        raise Exception(
+                            'Response code %u' % (response.status_code)
                         )
+                    
+                    image_data = io.BytesIO(response.content)
+                    image = Image.open(image_data)
+                    
+                    # Skip an url if the same size image will be fetched
+                    if (
+                        (report_dict['width'] == image.size[0]) and
+                        (report_dict['height'] == image.size[1])
+                    ):
+                        continue
+                    
+                    # Add an url
+                    report_dict = {
+                        'filename': gs_file, 'type': GS_URL_FILE_TYPE,
+                        'member': str(image_doc.imageId.imageHash) + '_f',
+                        'url': image_doc.fullUrl
+                    }
+                    report_dict.update(analyzer.analyze(image))
+                    o.write(json.dumps(report_dict) + '\n')
+                except Exception as e:
+                    sys.stderr.write(
+                        'WARNING: unable to fetch %s: %s\n' %
+                        (image_doc.fullUrl, e)
                     )
                     continue
 
@@ -180,11 +222,13 @@ def _analyze_tar(exec_details):
     with open(output_file, 'w') as o:
         for tar_file in tar_files:
             if not os.path.isfile(tar_file):
-                sys.stderr.write('Warning: file %s not found\n' % (tar_file))
+                sys.stderr.write(
+                    'WARNING: file \'%s\' not found\n' % (tar_file)
+                )
                 continue
             if not tarfile.is_tarfile(tar_file):
                 sys.stderr.write(
-                    'Warning: file %s is not a valid tar archive\n' %
+                    'WARNING: file \'%s\' is not a valid tar archive\n' %
                     (tar_file)
                 )
                 continue
@@ -204,10 +248,10 @@ def _analyze_tar(exec_details):
                         except Exception as e:
                             sys.stderr.write(
                                 (
-                                    'WARNING: Error during %s:%s ' +
+                                    'WARNING: error during %s:%s ' +
                                     'processing: %s\n'
                                 ) % (
-                                    tar_file, report_dict['member'], str(e)
+                                    tar_file, image_info.name, e
                                 )
                             )
                             continue
@@ -292,13 +336,13 @@ def rfilter_mp(proc_num, output_dir, input_files):
 def _rextract(exec_details):
     output_dir, input_files = exec_details[0], exec_details[1]
     gs_extracting_dict = {}
+    gs_url_fetching_dict = {}
     tar_extracting_dict = {}
-    
     
     for input_file in input_files:
         if not os.path.isfile(input_file):
             sys.stderr.write(
-                'WARNING: no such an input file %s\n' % (input_file)
+                'WARNING: no such an input file \'%s\'\n' % (input_file)
             )
             continue
         
@@ -318,6 +362,12 @@ def _rextract(exec_details):
                     gs_extracting_dict[filename] |= set([
                         parsed_element['member']
                     ])
+                elif parsed_element['type'] == GS_URL_FILE_TYPE:
+                    if filename not in gs_url_fetching_dict:
+                        gs_url_fetching_dict[filename] = {}
+                    gs_url_fetching_dict[filename][
+                        parsed_element['member']
+                    ] = parsed_element['url']
                 elif parsed_element['type'] == TAR_FILE_TYPE:
                     if filename not in tar_extracting_dict:
                         tar_extracting_dict[filename] = set()
@@ -334,7 +384,8 @@ def _rextract(exec_details):
         ):
             if occured_exception is not None:
                 sys.stderr.write(
-                    'WARNING: no such an input file %s\n' % (input_file)
+                    'WARNING: error during processing: %s\n' %
+                    (occured_exception)
                 )
                 continue
             
@@ -344,6 +395,32 @@ def _rextract(exec_details):
                     os.path.join(gs_output_dir, image_hash + '.jpeg'), 'wb'
                 ) as o:
                     o.write(image_doc.content)
+    
+    for gs_file in gs_url_fetching_dict:
+        gs_output_dir = os.path.join(output_dir, os.path.basename(gs_file))
+        if not os.path.isdir(gs_output_dir):
+            os.mkdir(gs_output_dir)
+        for image_name, image_url in gs_url_fetching_dict[gs_file].items():
+            try:
+                response = requests.get(image_url, stream = True)
+                if response.status_code != 200:
+                    raise Exception(
+                        'Response code %u' % (response.status_code)
+                    )
+                
+                image_filename = (
+                    os.path.join(gs_output_dir, image_name) + '.jpeg'
+                )
+                with open(image_filename, 'wb') as o:
+                    for received_data in response.iter_content(
+                        chunk_size = 4096
+                    ):
+                        o.write(received_data)
+            except Exception as e:
+                sys.stderr.write(
+                    'WARNING: unable to fetch \'%s\': %s\n' % (image_url, e)
+                )
+                continue
     
     for tar_file in tar_extracting_dict:
         tar_output_dir = os.path.join(output_dir, os.path.basename(tar_file))
