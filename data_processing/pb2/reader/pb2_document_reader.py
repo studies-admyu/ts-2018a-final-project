@@ -11,7 +11,6 @@ class Pb2DocumentReader:
     _DOCUMENT_LENGTH_SIZE = 5
     def __init__(self, path, yield_exceptions = False):
         self._stream = None
-        self._filename = path
         self._yield_exceptions = yield_exceptions
         
         if not os.path.isfile(path):
@@ -46,9 +45,7 @@ class Pb2DocumentReader:
                 )
             
             except Exception as e:
-                occured_exception = Exception(
-                    'Reading exception (%s): %s' % (self._filename, e)
-                )
+                occured_exception = e
                 if not self._yield_exceptions:
                     raise occured_exception
                 else:
