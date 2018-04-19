@@ -307,8 +307,8 @@ def _rfilter(exec_details):
                     )
                     
                     if (
-                        (parsed_element['width'] >= MIN_HEIGHT) and
-                        (parsed_element['height'] >= MIN_WIDTH) and
+                        (parsed_element['width'] >= MIN_WIDTH) and
+                        (parsed_element['height'] >= MIN_HEIGHT) and
                         face_ratio >= MIN_FACE_RATIO
                     ):
                         o.write(sline)
